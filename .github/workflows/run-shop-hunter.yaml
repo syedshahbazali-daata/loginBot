@@ -1,8 +1,9 @@
-name: Run ShopHunter Script Every 5 Minutes
+name: Run ShopHunter Script
 
 on:
   schedule:
     - cron: '*/5 * * * *'  # Run every 5 minutes
+  workflow_dispatch:  # Enable manual triggering
 
 jobs:
   run-playwright-script:
@@ -26,9 +27,8 @@ jobs:
       - name: Run login_shop_hunter script
         run: python login_shop_hunter.py
 
-      # Optional: Upload the authorization.json file as an artifact
       - name: Upload authorization.json
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: authorization
           path: authorization.json
