@@ -3,30 +3,35 @@ name: Run ShopHunter Script
 on:
   schedule:
     - cron: '*/5 * * * *'  # Run every 5 minutes
-  workflow_dispatch:  # Enable manual triggering
+  workflow_dispatch:  # Enable manual triggering of the workflow
 
 jobs:
   run-playwright-script:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code from your repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Step 2: Set up Python 3.12.4
       - name: Set up Python 3.12.4
         uses: actions/setup-python@v2
         with:
           python-version: '3.12.4'
 
-      - name: Install Playwright dependencies
+      # Step 3: Install dependencies for Playwright and other required libraries
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install playwright
+          pip install playwright requests
           playwright install  # Install browser binaries
 
+      # Step 4: Run login_shop_hunter script
       - name: Run login_shop_hunter script
         run: python login_shop_hunter.py
 
+      # Step 5: Upload the authorization.json if you save it in the script
       - name: Upload authorization.json
         uses: actions/upload-artifact@v3
         with:
