@@ -10,16 +10,18 @@ def update_login_auth(authorization_code, message_status):
     payload = {
 
         "authorization": authorization_code,
-        "lastUpdated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "lastUpdated": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
         "message": message_status
     }
 
-    res = requests.post("https://67051d5c031fd46a830eb344.mockapi.io/api/1", json=payload)
-    print(res.json())
-    if res.status_code == 200:
-        print("Login authentication updated successfully.")
-    else:
-        print("Failed to update login authentication.")
+    res = requests.post("https://67051d5c031fd46a830eb344.mockapi.io/api", json=payload,
+                        headers={"Content-Type": "application/json"})
+    print(res.text, "update_login_auth")
+
+
+def delete_login_auth():
+    res = requests.delete("https://67051d5c031fd46a830eb344.mockapi.io/api/1")
+    print(res.text, "delete_login_auth")
 
 
 def login_shop_hunter():
@@ -47,6 +49,9 @@ def login_shop_hunter():
             authorization = response.request.headers["authorization"]
             print(f"Authorization: {authorization}")
 
+            delete_login_auth()
+            update_login_auth(authorization, "Success")
+
             # Update the login authentication
             # update_login_auth(authorization, "Success")
 
@@ -55,8 +60,8 @@ def login_shop_hunter():
 
     except Exception as e:
         print(f"An error occurred: {e}")
+        delete_login_auth()
         update_login_auth("", "Failed")
-
 
 
 if __name__ == "__main__":
