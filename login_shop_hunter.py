@@ -48,7 +48,7 @@ def login_shop_hunter():
             print(f"Authorization: {authorization}")
 
             # Update the login authentication
-            update_login_auth(authorization, "Success")
+            # update_login_auth(authorization, "Success")
 
             # Close the browser
             browser.close()
