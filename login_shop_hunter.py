@@ -17,6 +17,11 @@ def update_login_auth(authorization_code, message_status):
     res = requests.post("https://67051d5c031fd46a830eb344.mockapi.io/api", json=payload,
                         headers={"Content-Type": "application/json"})
     print(res.text, "update_login_auth")
+    
+    res = requests.get("https://flasktest-render.onrender.com/api/get_authorization")
+    print(res.text, "update_login_auth on flaskBackend")
+
+
 
 
 def delete_login_auth():
